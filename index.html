@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كومي اقري رقية</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #f9ca24, #6c5ce7);
+            background-size: 300% 300%;
+            animation: gradientShift 3s ease infinite;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .floating-text {
+            position: absolute;
+            font-size: 2.5em;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            z-index: 10;
+            color: #ff0000;
+            animation: floatAndColor 8s infinite;
+        }
+
+        @keyframes floatAndColor {
+            0% {
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                color: #ff0000;
+            }
+            12.5% {
+                left: 80%;
+                top: 20%;
+                color: #ff8000;
+            }
+            25% {
+                left: 80%;
+                top: 80%;
+                color: #ffff00;
+            }
+            37.5% {
+                left: 50%;
+                top: 90%;
+                color: #80ff00;
+            }
+            50% {
+                left: 20%;
+                top: 80%;
+                color: #00ff00;
+            }
+            62.5% {
+                left: 20%;
+                top: 20%;
+                color: #00ff80;
+            }
+            75% {
+                left: 50%;
+                top: 10%;
+                color: #0080ff;
+            }
+            87.5% {
+                left: 80%;
+                top: 20%;
+                color: #8000ff;
+            }
+            100% {
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                color: #ff0080;
+            }
+        }
+
+        .button-container {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 30px;
+            z-index: 20;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            color: white;
+        }
+
+        .btn-yes {
+            background: linear-gradient(45deg, #56ab2f, #a8e6cf);
+        }
+
+        .btn-no {
+            background: linear-gradient(45deg, #ff6b6b, #ffa726);
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .celebration-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 1000;
+            text-align: center;
+            padding: 50px;
+            box-sizing: border-box;
+        }
+
+        .celebration-page h1 {
+            font-size: 3em;
+            color: #4ecdc4;
+            margin-bottom: 30px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff6b6b;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .balloon {
+            position: absolute;
+            width: 50px;
+            height: 70px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: balloon-float 4s ease-in-out infinite;
+        }
+
+        @keyframes balloon-float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .fireworks {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: radial-gradient(circle, #ff6b6b, transparent);
+            border-radius: 50%;
+            animation: fireworks 2s ease-out infinite;
+        }
+
+        @keyframes fireworks {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(20) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .cartoon-lion {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            animation: lion-celebrate 2s ease-in-out infinite;
+        }
+
+        .lion-left {
+            bottom: 20px;
+            left: 20px;
+            transform-origin: center;
+        }
+
+        .lion-right {
+            bottom: 20px;
+            right: 20px;
+            transform-origin: center;
+            animation-delay: 1s;
+        }
+
+        @keyframes lion-celebrate {
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+            }
+            25% {
+                transform: scale(1.1) rotate(-10deg);
+            }
+            50% {
+                transform: scale(1.2) rotate(0deg);
+            }
+            75% {
+                transform: scale(1.1) rotate(10deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-text">كومي اقري رقية</div>
+    
+    <div class="button-container">
+        <button class="btn btn-yes" onclick="goToCelebration()">اي رايحة اقرة</button>
+        <button class="btn btn-no" id="noBtn" onclick="shrinkButton()">ماقرة هسه بعدين عود</button>
+    </div>
+
+    <div class="celebration-page" id="celebrationPage">
+        <h1>عفية بشطورتي</h1>
+        <div id="celebrationElements"></div>
+        
+        <!-- Cartoon Lions -->
+        <div class="cartoon-lion lion-left">
+            <svg viewBox="0 0 120 120" width="120" height="120">
+                <!-- Lion Body -->
+                <ellipse cx="60" cy="85" rx="25" ry="20" fill="#DEB887"/>
+                <!-- Lion Head -->
+                <circle cx="60" cy="50" r="25" fill="#F4A460"/>
+                <!-- Lion Mane -->
+                <circle cx="45" cy="35" r="12" fill="#8B4513"/>
+                <circle cx="75" cy="35" r="12" fill="#8B4513"/>
+                <circle cx="35" cy="50" r="10" fill="#8B4513"/>
+                <circle cx="85" cy="50" r="10" fill="#8B4513"/>
+                <circle cx="40" cy="65" r="8" fill="#8B4513"/>
+                <circle cx="80" cy="65" r="8" fill="#8B4513"/>
+                <circle cx="60" cy="30" r="10" fill="#8B4513"/>
+                <!-- Lion Ears -->
+                <circle cx="45" cy="35" r="8" fill="#CD853F"/>
+                <circle cx="75" cy="35" r="8" fill="#CD853F"/>
+                <circle cx="45" cy="35" r="4" fill="#8B4513"/>
+                <circle cx="75" cy="35" r="4" fill="#8B4513"/>
+                <!-- Eyes -->
+                <ellipse cx="52" cy="48" rx="5" ry="7" fill="white"/>
+                <ellipse cx="68" cy="48" rx="5" ry="7" fill="white"/>
+                <circle cx="52" cy="48" r="3" fill="black"/>
+                <circle cx="68" cy="48" r="3" fill="black"/>
+                <circle cx="53" cy="47" r="1" fill="white"/>
+                <circle cx="69" cy="47" r="1" fill="white"/>
+                <!-- Nose -->
+                <path d="M 60 58 L 55 55 L 65 55 Z" fill="black"/>
+                <!-- Mouth -->
+                <path d="M 60 62 Q 52 68 48 65" stroke="black" stroke-width="2" fill="none"/>
+                <path d="M 60 62 Q 68 68 72 65" stroke="black" stroke-width="2" fill="none"/>
+                <!-- Whiskers -->
+                <line x1="35" y1="55" x2="45" y2="53" stroke="black" stroke-width="1"/>
+                <line x1="35" y1="60" x2="45" y2="58" stroke="black" stroke-width="1"/>
+                <line x1="75" y1="53" x2="85" y2="55" stroke="black" stroke-width="1"/>
+                <line x1="75" y1="58" x2="85" y2="60" stroke="black" stroke-width="1"/>
+                <!-- Party Hat -->
+                <polygon points="60,15 48,40 72,40" fill="#FF1493"/>
+                <line x1="60" y1="15" x2="60" y2="40" stroke="white" stroke-width="2"/>
+                <circle cx="60" cy="15" r="4" fill="#FFD700"/>
+                <!-- Front Paws -->
+                <ellipse cx="45" cy="95" rx="8" ry="12" fill="#DEB887"/>
+                <ellipse cx="75" cy="95" rx="8" ry="12" fill="#DEB887"/>
+                <!-- Tail -->
+                <ellipse cx="85" cy="80" rx="5" ry="15" fill="#DEB887" transform="rotate(45 85 80)"/>
+                <circle cx="88" cy="73" r="3" fill="#8B4513"/>
+            </svg>
+        </div>
+        
+        <div class="cartoon-lion lion-right">
+            <svg viewBox="0 0 120 120" width="120" height="120">
+                <!-- Lion Body -->
+                <ellipse cx="60" cy="85" rx="25" ry="20" fill="#DEB887"/>
+                <!-- Lion Head -->
+                <circle cx="60" cy="50" r="25" fill="#F4A460"/>
+                <!-- Lion Mane -->
+                <circle cx="45" cy="35" r="12" fill="#8B4513"/>
+                <circle cx="75" cy="35" r="12" fill="#8B4513"/>
+                <circle cx="35" cy="50" r="10" fill="#8B4513"/>
+                <circle cx="85" cy="50" r="10" fill="#8B4513"/>
+                <circle cx="40" cy="65" r="8" fill="#8B4513"/>
+                <circle cx="80" cy="65" r="8" fill="#8B4513"/>
+                <circle cx="60" cy="30" r="10" fill="#8B4513"/>
+                <!-- Lion Ears -->
+                <circle cx="45" cy="35" r="8" fill="#CD853F"/>
+                <circle cx="75" cy="35" r="8" fill="#CD853F"/>
+                <circle cx="45" cy="35" r="4" fill="#8B4513"/>
+                <circle cx="75" cy="35" r="4" fill="#8B4513"/>
+                <!-- Eyes -->
+                <ellipse cx="52" cy="48" rx="5" ry="7" fill="white"/>
+                <ellipse cx="68" cy="48" rx="5" ry="7" fill="white"/>
+                <circle cx="52" cy="48" r="3" fill="black"/>
+                <circle cx="68" cy="48" r="3" fill="black"/>
+                <circle cx="53" cy="47" r="1" fill="white"/>
+                <circle cx="69" cy="47" r="1" fill="white"/>
+                <!-- Nose -->
+                <path d="M 60 58 L 55 55 L 65 55 Z" fill="black"/>
+                <!-- Mouth -->
+                <path d="M 60 62 Q 52 68 48 65" stroke="black" stroke-width="2" fill="none"/>
+                <path d="M 60 62 Q 68 68 72 65" stroke="black" stroke-width="2" fill="none"/>
+                <!-- Whiskers -->
+                <line x1="35" y1="55" x2="45" y2="53" stroke="black" stroke-width="1"/>
+                <line x1="35" y1="60" x2="45" y2="58" stroke="black" stroke-width="1"/>
+                <line x1="75" y1="53" x2="85" y2="55" stroke="black" stroke-width="1"/>
+                <line x1="75" y1="58" x2="85" y2="60" stroke="black" stroke-width="1"/>
+                <!-- Party Hat -->
+                <polygon points="60,15 48,40 72,40" fill="#00CED1"/>
+                <line x1="60" y1="15" x2="60" y2="40" stroke="white" stroke-width="2"/>
+                <circle cx="60" cy="15" r="4" fill="#FFD700"/>
+                <!-- Front Paws -->
+                <ellipse cx="45" cy="95" rx="8" ry="12" fill="#DEB887"/>
+                <ellipse cx="75" cy="95" rx="8" ry="12" fill="#DEB887"/>
+                <!-- Tail -->
+                <ellipse cx="35" cy="80" rx="5" ry="15" fill="#DEB887" transform="rotate(-45 35 80)"/>
+                <circle cx="32" cy="73" r="3" fill="#8B4513"/>
+            </svg>
+        </div>
+    </div>
+
+    <script>
+        let shrinkCount = 0;
+        const noBtn = document.getElementById('noBtn');
+        
+        function shrinkButton() {
+            shrinkCount++;
+            const scale = Math.max(0.1, 1 - (shrinkCount * 0.15));
+            noBtn.style.transform = `scale(${scale})`;
+            
+            if (scale <= 0.1) {
+                noBtn.style.display = 'none';
+            }
+        }
+
+        function goToCelebration() {
+            document.getElementById('celebrationPage').style.display = 'block';
+            createCelebrationElements();
+            playCelebrationSounds();
+        }
+
+        function playCelebrationSounds() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Resume audio context for mobile browsers
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                
+                // Function to create celebration sounds
+                function playTone(frequency, duration, delay = 0) {
+                    setTimeout(() => {
+                        try {
+                            const oscillator = audioCtx.createOscillator();
+                            const gainNode = audioCtx.createGain();
+                            
+                            oscillator.connect(gainNode);
+                            gainNode.connect(audioCtx.destination);
+                            
+                            oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+                            oscillator.type = 'sine';
+                            
+                            gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+                            gainNode.gain.linearRampToValueAtTime(0.2, audioCtx.currentTime + 0.01);
+                            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                            
+                            oscillator.start(audioCtx.currentTime);
+                            oscillator.stop(audioCtx.currentTime + duration);
+                        } catch (e) {
+                            console.log('Audio error:', e);
+                        }
+                    }, delay);
+                }
+                
+                // Celebration melody
+                playTone(523.25, 0.3, 0);     // C5
+                playTone(659.25, 0.3, 300);   // E5
+                playTone(783.99, 0.3, 600);   // G5
+                playTone(1046.50, 0.5, 900);  // C6
+                
+                // Firework sounds
+                function playFirework(delay) {
+                    setTimeout(() => {
+                        try {
+                            const bufferSize = audioCtx.sampleRate * 0.3;
+                            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                            const output = buffer.getChannelData(0);
+                            
+                            // Create explosion sound
+                            for (let i = 0; i < bufferSize; i++) {
+                                const envelope = Math.exp(-i / (bufferSize * 0.3));
+                                output[i] = (Math.random() * 2 - 1) * envelope * 0.3;
+                            }
+                            
+                            const source = audioCtx.createBufferSource();
+                            const gain = audioCtx.createGain();
+                            
+                            source.buffer = buffer;
+                            source.connect(gain);
+                            gain.connect(audioCtx.destination);
+                            
+                            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                            
+                            source.start();
+                        } catch (e) {
+                            console.log('Firework audio error:', e);
+                        }
+                    }, delay);
+                }
+                
+                // Play firework sounds at random intervals
+                for (let i = 0; i < 4; i++) {
+                    playFirework(1500 + Math.random() * 2000);
+                }
+                
+                // Cheer sound
+                setTimeout(() => {
+                    try {
+                        const bufferSize = audioCtx.sampleRate * 1;
+                        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                        const output = buffer.getChannelData(0);
+                        
+                        for (let i = 0; i < bufferSize; i++) {
+                            output[i] = (Math.random() * 2 - 1) * 0.05;
+                        }
+                        
+                        const source = audioCtx.createBufferSource();
+                        source.buffer = buffer;
+                        source.connect(audioCtx.destination);
+                        source.start();
+                    } catch (e) {
+                        console.log('Cheer audio error:', e);
+                    }
+                }, 2000);
+                
+            } catch (e) {
+                console.log('Audio context error:', e);
+                // Fallback: try to use HTML5 audio with data URLs
+                try {
+                    const beep = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBzuX2e/HeCEFJmfD29yVTgoULJ7M7bFvGww+3dTWuWgcBlOdge2/byEGPKNO7qpcJAghcePhvWgdFlOK1Z3EryEJHmK3xP6iUhUNnx9sUgAA');
+                    beep.play().catch(e => console.log('Fallback audio failed:', e));
+                } catch (e) {
+                    console.log('Fallback audio error:', e);
+                }
+            }
+        }
+
+        function createCelebrationElements() {
+            const container = document.getElementById('celebrationElements');
+            
+            // Create confetti
+            for (let i = 0; i < 20; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.background = getRandomColor();
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                container.appendChild(confetti);
+            }
+
+            // Create balloons
+            for (let i = 0; i < 8; i++) {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                balloon.style.left = (i * 12 + 10) + '%';
+                balloon.style.top = Math.random() * 30 + 60 + '%';
+                balloon.style.background = getRandomColor();
+                balloon.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(balloon);
+            }
+
+            // Create fireworks
+            for (let i = 0; i < 10; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'fireworks';
+                firework.style.left = Math.random() * 100 + '%';
+                firework.style.top = Math.random() * 50 + '%';
+                firework.style.animationDelay = Math.random() * 3 + 's';
+                container.appendChild(firework);
+            }
+        }
+
+        function getRandomColor() {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7', '#ff9ff3', '#54a0ff', '#5f27cd'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Add some sparkle effects
+        setInterval(() => {
+            if (document.getElementById('celebrationPage').style.display === 'block') {
+                const sparkle = document.createElement('div');
+                sparkle.style.position = 'absolute';
+                sparkle.style.width = '4px';
+                sparkle.style.height = '4px';
+                sparkle.style.background = 'gold';
+                sparkle.style.borderRadius = '50%';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animation = 'fireworks 1s ease-out forwards';
+                document.getElementById('celebrationElements').appendChild(sparkle);
+                
+                setTimeout(() => sparkle.remove(), 1000);
+            }
+        }, 500);
+    </script>
+</body>
+</html>
